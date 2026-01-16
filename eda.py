@@ -100,31 +100,9 @@ def eda_app():
 
     # fig7
 
-    fig7 = px.histogram(data_frame = df_sidebar,
-             x          = "mes",
-             y = "Productos",
-             facet_col      = "año",
-             color ='Tienda',
-             nbins      = 50,
-             title='Suma de productos vendidos por mes')
+    gasto_diario = df_sidebar.groupby('dia')['Importe'].sum().reset_index()
+    fig7 = px.line(gasto_diario, x='dia', y='Importe', title='Gasto diario')
     fig7.update_layout(width=1000, height=700)
-
-    #fig8
-
-    productos_por_tiendas = df_sidebar.groupby(['Tienda', 'año'])['Productos'].sum().reset_index()
-    fig8 = px.line(
-    productos_por_tiendas,
-    x='año',
-    y='Productos',
-    color='Tienda',
-    title='Ventas de Productos por Tienda a lo largo de los años',
-    markers=True
-    )
-
-    #fig9
-
-    productos_por_año = df_sidebar.groupby('año')['Productos'].sum().reset_index()
-    fig9 = px.line(productos_por_año, x='año', y='Productos', title='Tendencia ventas por año')
 
     # Plots
 
@@ -135,8 +113,7 @@ def eda_app():
     st.plotly_chart(figure_or_data = fig5, use_container_width = True)
     st.plotly_chart(figure_or_data = fig6, use_container_width = True)
     st.plotly_chart(figure_or_data = fig7, use_container_width = True)
-    st.plotly_chart(figure_or_data = fig8, use_container_width = True)
-    st.plotly_chart(figure_or_data = fig9, use_container_width = True)
+    
 
     
 
