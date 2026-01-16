@@ -1,4 +1,4 @@
 # Gasto-banco
-Resumen de los gastos de la cuenta bancaria Bbva
+Resumen de los gastos de la cuenta bancaria bbva
 
 
