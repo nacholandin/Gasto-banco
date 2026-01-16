@@ -104,6 +104,12 @@ def eda_app():
     fig7 = px.line(gasto_diario, x='dia', y='Importe', title='Gasto diario')
     fig7.update_layout(width=1000, height=700)
 
+    df_sidebar.reset_index(drop = True, inplace = True)
+    
+    with st.expander(label = "DataFrame", expanded = False):
+        st.dataframe(df_sidebar)
+        st.write(f"DataFrame dimensions: {df_sidebar.shape[0]}x{df_sidebar.shape[1]}")
+
     # Plots
 
     st.plotly_chart(figure_or_data = fig1, use_container_width = True)
