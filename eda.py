@@ -21,73 +21,81 @@ def eda_app():
     df_sidebar = df.copy()
 
     ### Model Type
-    model_tienda_options = ["All"] + list(df_sidebar["Tienda"].unique())
-    model_tienda = st.sidebar.multiselect(label   = "Select Tienda:",
-                                      options = model_tienda_options,
-                                      default= ["All"])
+    model_categoria_options = ["Todos"] + list(df_sidebar["Gasto"].unique())
+    model_categoria = st.sidebar.multiselect(label   = "Selecciona categoria:",
+                                      options = model_categoria_options,
+                                      default= ["Todos"])
     
 
-    if "All" in model_tienda:
+    if "Todos" in model_categoria:
         df_sidebar = df_sidebar  # Si "All" está seleccionado, mostrar todos los datos
     else:
-        df_sidebar = df_sidebar[df_sidebar["Tienda"].isin(model_tienda)]
+        df_sidebar = df_sidebar[df_sidebar["Gasto"].isin(model_categoria)]
 
-
-    ### Platform
-    platform_options = ["All"] + list(df_sidebar["año"].unique())
-    platform_type = st.sidebar.multiselect(label   = "Select año:",
-                                         options =  platform_options,
-                                         default = ["All"])
+         ### Año
+    año_options = ["Todos"] + list(df_sidebar["año"].unique())
+    año_type = st.sidebar.multiselect(label   = "Selecciona año:",
+                                         options =  año_options,
+                                         default = ["Todos"])
     
-    if "All" in platform_type:
+    if "Todos" in año_type:
         df_sidebar = df_sidebar  # Si "All" está seleccionado, mostrar todos los datos
     else:
-        df_sidebar = df_sidebar[df_sidebar["año"].isin(platform_type)]
+        df_sidebar = df_sidebar[df_sidebar["año"].isin(año_type)]
 
+
+    ### Mes
+    mes_options = ["Todos"] + list(df_sidebar["mes"].unique())
+    mes_type = st.sidebar.multiselect(label   = "Selecciona mes:",
+                                         options =  mes_options,
+                                         default = ["Todos"])
     
+    if "Todos" in mes_type:
+        df_sidebar = df_sidebar  # Si "All" está seleccionado, mostrar todos los datos
+    else:
+        df_sidebar = df_sidebar[df_sidebar["mes"].isin(mes_type)]
+
 
      # fig1
 
-    productos_por_tienda = df_sidebar.groupby('Tienda')['Productos'].sum().reset_index()
-    productos_por_tienda_año = df_sidebar.groupby(['Tienda', 'año'])['Productos'].sum().reset_index()
-    ingreso_por_tienda = df_sidebar.groupby('Tienda')['Ingreso'].sum().reset_index()
-    ingreso_por_tienda_año = df_sidebar.groupby(['Tienda', 'año'])['Ingreso'].sum().reset_index() 
-    fig1 = px.bar(productos_por_tienda, x='Tienda', y='Productos', color= 'Tienda', title='Suma de productos vendidos por tienda')
+    ingresos = df_sidebar.loc[df_sidebar['Gasto'] == "Ingreso", 'Importe'].sum()
+    categorias_gastos = ["Hogar", "Niñas", "Coche", "Varios"]
+    gastos = df_sidebar.loc[df_sidebar['Gasto'].isin(categorias_gastos), 'Importe'].sum()
+    resumen = pd.DataFrame({'Tipo': ['Ingresos', 'Gastos'],'Importe': [ingresos, gastos]})
+
+    fig1 = px.bar(resumen,x='Tipo',y='Importe',color="Tipo",title='Ingresos vs Gastos')
     fig1.update_layout(width=1200, height=600)
 
     # fig2
 
-    fig2 = px.bar(productos_por_tienda_año, x='Tienda', y='Productos', color='año', title='Suma de productos vendidos por tienda y año')
+    df_gasto = (df_sidebar.groupby("Gasto", as_index=False)["Importe"].sum())
+
+    fig2 = px.bar(df_gasto,x="Gasto",y="Importe",color="Gasto",title="Gasto total por categoría")
     fig2.update_layout(width=1200, height=600)
 
     # fig3
 
-    fig3 = px.bar(ingreso_por_tienda, x='Tienda', y='Ingreso', color= 'Tienda', title='Suma de ingresos por tienda')
+    df_hogar = (df_sidebar[df_sidebar["Gasto"] == "Hogar"].groupby("Categoria", as_index=False)["Importe"].sum())
+
+    fig3 = px.bar(df_hogar,x="Categoria",y="Importe",color="Categoria",title="Gasto Hogar por Categoría")
     fig3.update_layout(width=1200, height=600)
     
     # fig4
 
-    fig4 = px.bar(ingreso_por_tienda_año, x='Tienda', y='Ingreso', color='año', title='Suma de ingresos por tienda y año')
+    df_niñas = (df_sidebar[df_sidebar["Gasto"] == "Niñas"].groupby("Categoria", as_index=False)["Importe"].sum())
+    fig4 = px.bar(df_niñas,x="Categoria",y="Importe",color="Categoria",title="Gasto Niñas por Categoría")
     fig4.update_layout(width=1200, height=600)
 
     # fig5
 
-    fig5 = px.histogram(data_frame = df_sidebar,
-             x          = "dia",
-             y  = "Productos",
-            color = 'Tienda',
-            title='Suma de productos vendidos por dia de la semana')
+    df_coche = (df_sidebar[df_sidebar["Gasto"] == "Coche"].groupby("Categoria", as_index=False)["Importe"].sum())
+    fig5 = px.bar(df_coche,x="Categoria",y="Importe",color="Categoria",title="Gasto coche por Categoría")
     fig5.update_layout(width=1200, height=600)
 
     # fig6
 
-    fig6 = px.histogram(data_frame = df_sidebar,
-             x          = "dia",
-             y = "Productos",
-             facet_col      = "año",
-             color ='Tienda',
-             nbins      = 50,
-             title='Suma de productos vendidos por dia de la semana cada año')
+    df_varios = (df_sidebar[df_sidebar["Gasto"] == "Varios"].groupby("Categoria", as_index=False)["Importe"].sum())
+    fig6 = px.bar(df_varios,x="Categoria",y="Importe",color="Categoria",title="Gasto coche por Categoría")
     fig6.update_layout(width=1200, height=600)
 
     # fig7

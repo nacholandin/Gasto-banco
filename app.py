@@ -8,14 +8,14 @@ from PIL import Image
 def main():
     st.set_page_config(**PAGE_CONFIG)
    
-    menu = ["Home", "Gastos BBVA"]
+    menu = ["Inicio", "Gastos BBVA"]
 
     choice = st.sidebar.selectbox(label = "Menu", options = menu, index = 0)
  
-    if choice == "Home":
+    if choice == "Inicio":
         
         
-        st.header(body = "Introducción")
+        st.header(body = "GASTOS  CUENTA BBVA CONJUNTA")
 
         st.subheader("DESGLOSE GASTOS CUENTA BANCO BBVA")
 
