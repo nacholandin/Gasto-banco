@@ -64,45 +64,45 @@ def eda_app():
     resumen = pd.DataFrame({'Tipo': ['Ingresos', 'Gastos'],'Importe': [ingresos, gastos]})
 
     fig1 = px.bar(resumen,x='Tipo',y='Importe',color="Tipo",title='Ingresos vs Gastos')
-    fig1.update_layout(width=1200, height=600)
+    fig1.update_layout(width=800, height=400)
 
     # fig2
 
     df_gasto = (df_sidebar.groupby("Gasto", as_index=False)["Importe"].sum())
 
     fig2 = px.bar(df_gasto,x="Gasto",y="Importe",color="Gasto",title="Gasto total por categoría")
-    fig2.update_layout(width=1200, height=600)
+    fig2.update_layout(width=1000, height=500)
 
     # fig3
 
     df_hogar = (df_sidebar[df_sidebar["Gasto"] == "Hogar"].groupby("Categoria", as_index=False)["Importe"].sum())
 
     fig3 = px.bar(df_hogar,x="Categoria",y="Importe",color="Categoria",title="Gasto Hogar por Categoría")
-    fig3.update_layout(width=1200, height=600)
+    fig3.update_layout(width=1000, height=500)
     
     # fig4
 
     df_niñas = (df_sidebar[df_sidebar["Gasto"] == "Niñas"].groupby("Categoria", as_index=False)["Importe"].sum())
     fig4 = px.bar(df_niñas,x="Categoria",y="Importe",color="Categoria",title="Gasto Niñas por Categoría")
-    fig4.update_layout(width=1200, height=600)
+    fig4.update_layout(width=1000, height=500)
 
     # fig5
 
     df_coche = (df_sidebar[df_sidebar["Gasto"] == "Coche"].groupby("Categoria", as_index=False)["Importe"].sum())
     fig5 = px.bar(df_coche,x="Categoria",y="Importe",color="Categoria",title="Gasto coche por Categoría")
-    fig5.update_layout(width=1200, height=600)
+    fig5.update_layout(width=1000, height=500)
 
     # fig6
 
     df_varios = (df_sidebar[df_sidebar["Gasto"] == "Varios"].groupby("Categoria", as_index=False)["Importe"].sum())
     fig6 = px.bar(df_varios,x="Categoria",y="Importe",color="Categoria",title="Gasto coche por Categoría")
-    fig6.update_layout(width=1200, height=600)
+    fig6.update_layout(width=1000, height=500)
 
     # fig7
 
     gasto_diario = df_sidebar.groupby('dia')['Importe'].sum().reset_index()
     fig7 = px.line(gasto_diario, x='dia', y='Importe', title='Gasto diario')
-    fig7.update_layout(width=1000, height=700)
+    fig7.update_layout(width=8000, height=500)
 
     df_sidebar.reset_index(drop = True, inplace = True)
     
