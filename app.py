@@ -18,7 +18,7 @@ def main():
 
         st.subheader("DESGLOSE GASTOS CUENTA BANCO BBVA")
 
-        image = Image.open("source/Colorful Modern Line Chart Diagram Graph.png")
+        image = Image.open("Source/Colorful Modern Line Chart Diagram Graph.png")
         st.image(image           = image, 
                  width=500)
         
