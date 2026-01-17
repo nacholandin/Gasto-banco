@@ -7,5 +7,5 @@ PAGE_CONFIG = {"page_title"             : "Gastos BBVA - Streamlit",
                  "layout"                : "wide"}
 
 def read_eda():
-     df = pd.read_csv("source/bbva.csv")
+     df = pd.read_csv("Source/bbva.csv")
      return df
