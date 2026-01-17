@@ -7,7 +7,7 @@ from PIL import Image
 def main():
     st.set_page_config(**PAGE_CONFIG)
    
-    menu = ["Inicio", "Gastos BBVA"]
+    menu = ["Inicio", "Gastos bbva"]
 
     choice = st.sidebar.selectbox(label = "Menu", options = menu, index = 0)
  
@@ -23,7 +23,7 @@ def main():
                  width=500)
         
 
-    elif choice == "Exploratory Data Analysis":
+    elif choice == "Gastos bbva":
         eda_app()
 
 
