@@ -1,6 +1,6 @@
 import streamlit as st
 import plotly.express as px
-from module.aplication import *
+from Module.aplication import *
 from eda import eda_app
 from PIL import Image
  
