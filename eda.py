@@ -95,7 +95,7 @@ def eda_app():
     # fig6
 
     df_varios = (df_sidebar[df_sidebar["Gasto"] == "Varios"].groupby("Categoria", as_index=False)["Importe"].sum())
-    fig6 = px.bar(df_varios,x="Categoria",y="Importe",color="Categoria",title="Gasto coche por Categoría")
+    fig6 = px.bar(df_varios,x="Categoria",y="Importe",color="Categoria",title="Gasto varios por Categoría")
     fig6.update_layout(width=1000, height=500)
 
     # fig7
